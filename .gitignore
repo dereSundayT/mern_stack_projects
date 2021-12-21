@@ -1,3 +1,8 @@
 api/node_modules
+api/yarn-error.log
+api/yarn.lock
 api/.env
 client/node_modules
+client/yarn-error.log
+client/yarn.lock
+client/.env
