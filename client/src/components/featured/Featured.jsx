@@ -1,13 +1,32 @@
 import { InfoOutlined, PlayArrow } from '@material-ui/icons'
-import React from 'react'
+import axios from 'axios'
+import React,{useEffect, useState} from 'react'
+
 import './featured.scss'
 
 const Featured = ({type}) => {
+    const [content, setContent] = useState({})
+
+    useEffect(() => {
+        const getRandomContent = async () => {
+            //
+            try {
+                const res = await axios.get(`/movies/random?type=${type}`,
+                 {headers:{ token: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxY2I5MDA0OWE2YWI3NDY1OWMzZjcyYyIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE2NDA3MzA2MzgsImV4cCI6MTY0MTE2MjYzOH0.DssX1PnL31XuLEnCRPLJWOkCqOWClpFqAtQ2GKuBmQQ"}}
+                )
+                setContent(res.data[0])
+                
+            } catch (error) {
+                
+            }
+        }
+        getRandomContent()
+    },[type])
     return (
         <div className='featured'>
             {type && (
                 <div className="category">
-                <span>{type === "movie" ? "Movies" : "Series"}</span>
+                <span>{type === "movies" ? "Movies" : "Series"}</span>
                 <select name="genre" id="genre">
                     <option>Genre</option>
                     <option value="adventure">Adventure</option>
@@ -26,11 +45,11 @@ const Featured = ({type}) => {
                 </select>
                 </div>
             )}
-            <img src="https://images.pexels.com/photos/6899260/pexels-photo-6899260.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"  alt=""/>
+            <img src={content.img}  alt=""/>
 
             <div className="info">
-                <img src="https://occ-0-1432-1433.1.nflxso.net/dnm/api/v6/LmEnxtiAuzezXBjYXPuDgfZ4zZQ/AAAABUZdeG1DrMstq-YKHZ-dA-cx2uQN_YbCYx7RABDk0y7F8ZK6nzgCz4bp5qJVgMizPbVpIvXrd4xMBQAuNe0xmuW2WjoeGMDn1cFO.webp?r=df1" alt="" />
-                <span className="desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Error, totam molestiae placeat maxime aperiam adipisci, aspernatur eaque beatae quas nulla temporibus quibusdam ducimus. Cumque perferendis officiis aliquid sequi illum velit?</span>
+                <img src={content.imgTitle} alt="" />
+                <span className="desc">{content.desc}</span>
                 <div className="buttons">
                     <button className='play'>
                         <PlayArrow/>

@@ -8,12 +8,12 @@ router.post('/', verify, async (req, res) => {
 		const newList = new List(req.body)
 		try {
 			const savedList = await newList.save()
-			res.status(200).json(newList)
+			res.status(201).json(savedList)
 		} catch (err) {
 			res.status(500).json(err.message)
 		}
 	} else {
-		res.status(419).json('You are not allowed')
+		res.status(403).json('You are not allowed')
 	}
 })
 //DELETE
@@ -34,7 +34,6 @@ router.get('/', verify, async (req, res) => {
 	const typeQuery = req.query.type
 	const genreQuery = req.query.genre
 	let list = []
-
 	try {
 		if (typeQuery) {
 			if (genreQuery) {
