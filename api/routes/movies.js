@@ -13,6 +13,7 @@ router.post('/', verify, async (req, res) => {
 			res.status(500).json(err)
 		}
 	} else {
+		//
 		res.status(419).json('You are not allowed')
 	}
 })
@@ -44,7 +45,7 @@ router.delete('/:id', verify, async (req, res) => {
 			await Movie.findByIdAndDelete(res.params.id)
 			res.status(200).json('The movie has been deleted')
 		} catch (err) {
-			res.json(500).json(err)
+			res.status(500).json(err)
 		}
 	} else {
 		res.status(419).json('You are not allowed')
@@ -90,7 +91,7 @@ router.get('/', verify, async (req, res) => {
 			const movies = await Movie.find()
 			res.status(200).json(movies.reverse())
 		} catch (err) {
-			res.json(500).json(err)
+			res.status(500).json(err)
 		}
 	} else {
 		res.status(419).json('You are not allowed')

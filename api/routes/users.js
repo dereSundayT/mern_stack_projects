@@ -24,7 +24,7 @@ router.put('/:id', verify, async (req, res) => {
 			//
 			res.status(200).json(updatedUser)
 		} catch (err) {
-			res.json(500).json(err)
+			res.status(500).json(err)
 		}
 	} else {
 		res.status(419).json('You are not allowed to edit this user')
@@ -60,11 +60,11 @@ router.get('/', verify, async (req, res) => {
 	if (req.user.isAdmin) {
 		try {
 			const users = query
-				? await User.find().sort({ _id: -1 }).limit(10)
+				? await User.find().sort({ _id: -1 }).limit(5)
 				: await User.find()
 			res.status(200).json(users)
 		} catch (err) {
-			res.json(500).json(err)
+			res.status(500).json(err)
 		}
 	} else {
 		res.status(419).json('You are not allowed to see all user')
@@ -75,7 +75,7 @@ router.get('/stats', verify, async (req, res) => {
 	//
 	const today = new Date()
 	const lastYear = today.setFullYear(today.setFullYear() - 1)
-	const months = ['Jan', 'Feb']
+	// const months = ['Jan', 'Feb']
 
 	try {
 		//
@@ -92,9 +92,9 @@ router.get('/stats', verify, async (req, res) => {
 				},
 			},
 		])
-		res.json(200).json(data)
+		res.status(200).json(data)
 	} catch (error) {
-		res.json(500).json(error)
+		res.status(500).json(error)
 	}
 })
 
